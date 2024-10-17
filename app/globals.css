@@ -1,27 +1,30 @@
+/* ./app/globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Базовые стили */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-secondary transition-colors duration-300;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Светлый режим */
+.light-mode {
+  @apply bg-white text-black;
+}
+
+/* Темный режим */
+.dark-mode {
+  @apply bg-background text-secondary;
+}
+
+/* Прелоадер */
+.preloader {
+  @apply fixed inset-0 flex items-center justify-center bg-background z-50;
+}
+
+/* Кастомные классы */
+.rounded-custom {
+  border-radius: 24px;
 }
