@@ -3,7 +3,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import ServiceCard from './ServiceCard'
+import PopupBot from './ai/PopupBot' // Импортируем новый компонент
 
 // Данные для услуг
 const servicesData = [
@@ -32,6 +34,16 @@ const servicesData = [
 ]
 
 export default function Services() {
+  const [isPopupBotOpen, setIsPopupBotOpen] = useState(false)
+
+  const handlePopupBotOpen = () => {
+    setIsPopupBotOpen(true)
+  }
+
+  const handlePopupBotClose = () => {
+    setIsPopupBotOpen(false)
+  }
+
   return (
     <section id="services" className="py-20 bg-gradient-to-b from-gray-900 to-black">
       <div className="container mx-auto px-4">
@@ -41,7 +53,7 @@ export default function Services() {
         <div className="flex flex-wrap -mx-4">
           {servicesData.map((service, index) => (
             <motion.div
-              key={`service-${service.id}`} // Обновлённый ключ
+              key={`service-${service.id}`}
               className="w-full md:w-1/3 px-4 mb-12 flex items-stretch"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -53,11 +65,17 @@ export default function Services() {
                 alt={service.alt}
                 title={service.title}
                 description={service.description}
+                onButtonClick={
+                  service.id === 1 ? handlePopupBotOpen : undefined
+                } // Передаем функцию только для первой услуги
               />
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Отображаем PopupBot при необходимости */}
+      <PopupBot isOpen={isPopupBotOpen} onClose={handlePopupBotClose} />
     </section>
   )
 }

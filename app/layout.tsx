@@ -8,6 +8,9 @@ import Footer from '../components/Footer'
 export const metadata = {
   title: 'DOLYA AI',
   description: 'AI решения для бизнеса',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 interface RootLayoutProps {

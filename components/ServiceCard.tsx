@@ -12,14 +12,19 @@ interface ServiceCardProps {
   alt: string
   title: string
   description: string
+  onButtonClick?: () => void // Добавили пропс для обработки клика по кнопке
 }
 
-export default function ServiceCard({ src, alt, title, description }: ServiceCardProps) {
+export default function ServiceCard({ src, alt, title, description, onButtonClick }: ServiceCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleModalOpen = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setIsModalOpen(true)
+    if (onButtonClick) {
+      onButtonClick()
+    } else {
+      setIsModalOpen(true)
+    }
   }
 
   const handleModalClose = () => {
@@ -57,7 +62,7 @@ export default function ServiceCard({ src, alt, title, description }: ServiceCar
               className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={(e) => e.stopPropagation()} // Предотвращает закрытие модала при клике на кнопку
+              onClick={handleModalOpen}
             >
               Это что?
             </motion.button>
@@ -65,9 +70,9 @@ export default function ServiceCard({ src, alt, title, description }: ServiceCar
         </div>
       </motion.div>
 
-      {/* Попап */}
+      {/* Попап по умолчанию */}
       <AnimatePresence>
-        {isModalOpen && (
+        {isModalOpen && !onButtonClick && (
           <motion.div
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
